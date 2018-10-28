@@ -10,7 +10,7 @@
 √ sharpening pencil should degrade the length by 1
 √ when length reaches 0, the pencil should not be able to be sharpened anymore
 √ pencil should be instantiated with an eraser property
-- should be able to replace eraser function input with whitespace
+√ should be able to replace eraser function input with whitespace
 - if there are multiple occurences of the word to erase, the last occurence should be erased
 - eraser should degrade by 1 per character erase
 - if eraser durability reaches 0, then the eraser should stop working

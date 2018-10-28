@@ -88,4 +88,10 @@ describe('using the eraser', () => {
     it('pencil should be instantiated with an eraserDurability property', () => {
         expect(pencil.eraserDurability).toBe(100)
     })
+
+    it('eraser should be able to delete text and replace it with whitespace', () => {
+        pencil.write("Hello Pillar. Let's get to it!", paper)
+        pencil.erase('get', paper)
+        expect(paper.text).toBe("Hello Pillar. Let's     to it!")
+    })
 })

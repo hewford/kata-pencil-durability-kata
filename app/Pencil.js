@@ -15,7 +15,7 @@ class Pencil {
             // store number of empty spaces in a string
             const emptySpace = text.match(regExp)[0].split('').reduce((emptySpace, space) => {
                 return emptySpace += ' '
-              }, '')
+            }, '')
             text = text.replace(regExp, emptySpace)
         }
 
@@ -27,6 +27,14 @@ class Pencil {
             this.pointDurability = this.originalPointDurability
             this.length--
         }
+    }
+
+    erase(text, paper) {
+        const emptySpace = text.split('').reduce((emptySpace, character) => {
+            return emptySpace += ' '
+        }, '')
+        const regExp = new RegExp(text)
+        return paper.text = paper.text.replace(regExp, emptySpace)
     }
 }
 
