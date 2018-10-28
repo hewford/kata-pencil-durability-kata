@@ -94,4 +94,10 @@ describe('using the eraser', () => {
         pencil.erase('get', paper)
         expect(paper.text).toBe("Hello Pillar. Let's     to it!")
     })
+
+    it('if there are multiple occurrences of the word to erase, the last occurrence should be erased', () => {
+        pencil.write("Hello Pillar. Hello World!", paper)
+        pencil.erase('Hello', paper)
+        expect(paper.text).toBe("Hello Pillar.       World!")
+    })
 })
