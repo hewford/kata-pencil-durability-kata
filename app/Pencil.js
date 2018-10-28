@@ -1,5 +1,6 @@
 class Pencil {
     constructor(props) {
+        this.props = {...props}
         this.pointDurability = props.pointDurability
     }
 
@@ -17,6 +18,10 @@ class Pencil {
         }
 
         return paper.text += text
+    }
+
+    sharpen() {
+        
     }
 }
 

@@ -7,7 +7,7 @@ describe('writing with the pencil', () => {
     beforeEach(() => {
         pencil = new Pencil({...props})
         paper = new Paper()
-      })
+    })
 
     it('pencil should be able to write to paper', () => {
         pencil.write('hello', paper)
@@ -44,4 +44,18 @@ describe('writing with the pencil', () => {
         pencil.write('Hello \nPillar!', paper)
         expect(pencil.pointDurability).toBe(36)
     })
+})
+
+describe('using the sharpener', () => {
+    let pencil, paper
+    let props = {pointDurability: 50}
+    beforeEach(() => {
+        pencil = new Pencil({...props})
+        paper = new Paper()
+    })
+    
+    it('pencil should have a function to sharpen it', () => {
+        expect(typeof pencil.sharpen).toBe('function')
+    })
+
 })
