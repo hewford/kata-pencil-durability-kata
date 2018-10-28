@@ -1,6 +1,6 @@
 class Pencil {
-    write() {
-
+    write(text, paper) {
+        return paper.text = text
     }
 }
 
