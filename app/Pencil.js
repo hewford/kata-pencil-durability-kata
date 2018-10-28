@@ -30,17 +30,22 @@ class Pencil {
     }
 
     erase(text, paper) {
-        const emptySpace = text.split('').reduce((emptySpace) => {
-            return emptySpace += ' '
-        }, '')
-        const regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
-        
-        if (paper.text.match(regExp)) {
-            this.eraserDurability -= emptySpace.length
-            paper.text = paper.text.replace(regExp, emptySpace)
-            return 'erased ' + text
+        if (this.eraserDurability) {
+            const emptySpace = text.split('').reduce((emptySpace) => {
+                return emptySpace += ' '
+            }, '')
+
+            const regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
+            
+            if (paper.text.match(regExp)) {
+                this.eraserDurability -= emptySpace.length
+                paper.text = paper.text.replace(regExp, emptySpace)
+                return 'erased ' + text
+            } else {
+                return 'text to be erased could not be found on the paper'
+            }
         } else {
-            return 'text to be erased could not be found on the paper'
+            return 'cannot erase since the eraser is completed degraded'
         }
     }
 }

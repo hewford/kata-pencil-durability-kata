@@ -116,4 +116,10 @@ describe('using the eraser', () => {
         pencil.write("Hello Pillar.", paper)
         expect(pencil.erase('Hello', paper)).toBe('erased Hello')
     })
+
+    it('if eraser durability reaches 0, then the eraser should stop working', () => {
+        pencil.write("Eraser? nope.", paper)
+        pencil.eraserDurability = 0
+        expect(pencil.erase('nope')).toBe('cannot erase since the eraser is completed degraded')
+    })
 })
