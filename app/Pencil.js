@@ -1,8 +1,9 @@
 class Pencil {
     constructor(props) {
-        this.props = {...props}
+        this.originalPointDurability = {...props}.pointDurability
         this.pointDurability = props.pointDurability
         this.length = props.length
+        this.eraserDurability = props.eraserDurability
     }
 
     write(text, paper) {
@@ -23,7 +24,7 @@ class Pencil {
 
     sharpen() {
         if (this.length > 0) {
-            this.pointDurability = this.props.pointDurability
+            this.pointDurability = this.originalPointDurability
             this.length--
         }
     }

@@ -76,3 +76,16 @@ describe('using the sharpener', () => {
         expect(pencil.pointDurability).toBe(0)
     })
 })
+
+describe('using the eraser', () => {
+    let pencil, paper
+    let props = {pointDurability: 50, length: 7, eraserDurability: 100}
+    beforeEach(() => {
+        pencil = new Pencil({...props})
+        paper = new Paper()
+    })
+
+    it('pencil should be instantiated with an eraserDurability property', () => {
+        expect(pencil.eraserDurability).toBe(100)
+    })
+})
