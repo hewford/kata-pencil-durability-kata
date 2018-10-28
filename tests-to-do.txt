@@ -1,4 +1,4 @@
-- should be able to instantiate pencil
+√ should be able to instantiate pencil
 - should be able to instantiate paper
 - pencil should be able to write to paper
 - pencil should have a point durability
