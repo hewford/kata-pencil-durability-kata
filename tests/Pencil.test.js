@@ -48,7 +48,7 @@ describe('writing with the pencil', () => {
 
 describe('using the sharpener', () => {
     let pencil, paper
-    let props = {pointDurability: 50}
+    let props = {pointDurability: 50, length: 7}
     beforeEach(() => {
         pencil = new Pencil({...props})
         paper = new Paper()
@@ -58,6 +58,10 @@ describe('using the sharpener', () => {
         pencil.write('Hello', paper)
         pencil.sharpen()
         expect(pencil.pointDurability).toBe(50)
+    })
+
+    it('pencil should be instantiated with a length property', () => {
+        expect(pencil.length).toBe(7)
     })
 
 })
