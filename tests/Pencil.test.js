@@ -106,4 +106,14 @@ describe('using the eraser', () => {
         pencil.erase('Hello', paper)
         expect(pencil.eraserDurability).toBe(95)
     })
+
+    it('trying to erase a set of characters that does not exist should alert the user', () => {
+        pencil.write("Hello Pillar.", paper)
+        expect(pencil.erase('Held', paper)).toBe('text to be erased could not be found on the paper')
+    })
+
+    it('successful erasing should alert the user what was erased', () => {
+        pencil.write("Hello Pillar.", paper)
+        expect(pencil.erase('Hello', paper)).toBe('erased Hello')
+    })
 })
