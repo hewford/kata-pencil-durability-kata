@@ -1,5 +1,5 @@
 √ should be able to instantiate pencil
-- should be able to instantiate paper
+√ should be able to instantiate paper
 - pencil should be able to write to paper
 - pencil should have a point durability
 - writing should decrease pencil durability by 1 per lowercase and 2 per uppercase
