@@ -1,11 +1,11 @@
 class Pencil {
     constructor(props) {
-        console.log(props.pointDurability)
         this.pointDurability = props.pointDurability
     }
 
     write(text, paper) {
-        this.pointDurability -= text.length
+        this.pointDurability -= text.match(/[A-Z]/g) ? text.match(/[A-Z]/g).length*2 : 0
+        this.pointDurability -= text.match(/[a-z]/g) ? text.match(/[a-z]/g).length : 0
         return paper.text += text
     }
 }

@@ -24,8 +24,13 @@ describe('writing with the pencil', () => {
         expect(pencil.pointDurability).toBe(50)
     })
 
-    it ('writing with pencil should decrease the durability', () => {
+    it('writing lowercase with pencil should decrease the durability by 1', () => {
         pencil.write('hello', paper)
         expect(pencil.pointDurability).toBe(45)
+    })
+
+    it('writing uppercase with pencil should decrease the durability by 2', () => {
+        pencil.write('Hello', paper)
+        expect(pencil.pointDurability).toBe(44)
     })
 })
