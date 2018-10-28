@@ -64,4 +64,8 @@ describe('using the sharpener', () => {
         expect(pencil.length).toBe(7)
     })
 
+    it('sharpening pencil should degrade the length by 1', () => {
+        pencil.sharpen()
+        expect(pencil.length).toBe(6)
+    })
 })

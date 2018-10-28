@@ -22,6 +22,7 @@ class Pencil {
     }
 
     sharpen() {
+        this.length --
         return this.pointDurability = this.props.pointDurability
     }
 }

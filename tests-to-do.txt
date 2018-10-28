@@ -7,7 +7,7 @@
 √ spaces and newlines should not degrade pencil
 √ pencil should be able to be sharpened
 √ pencil should be instantiated with a length property
-- sharpening pencil should degrade the length by 1
+√ sharpening pencil should degrade the length by 1
 - when length reaches 0, the pencil should not be able to be sharpened anymore
 - pencil should be instantiated with an eraser property
 - should be able to replace eraser function input with whitespace
