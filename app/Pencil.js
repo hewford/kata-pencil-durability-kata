@@ -5,7 +5,7 @@ class Pencil {
 
     write(text, paper) {
         this.pointDurability -= text.match(/[A-Z]/g) ? text.match(/[A-Z]/g).length*2 : 0
-        this.pointDurability -= text.match(/[^A-Z]/g) ? text.match(/[^A-Z]/g).length : 0
+        this.pointDurability -= text.match(/[^A-Z\s]/g) ? text.match(/[^A-Z\s]/g).length : 0
 
         if (this.pointDurability <= 0) {
             let regExp = new RegExp('\\w{'+Math.abs(this.pointDurability)+'}$')

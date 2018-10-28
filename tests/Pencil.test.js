@@ -39,4 +39,9 @@ describe('writing with the pencil', () => {
         pencil.write('Hello', paper)
         expect(paper.text).toBe('He   ')
     })
+
+    it('writing spaces and newlines should not degrade pencil', () => {
+        pencil.write('Hello \nPillar!', paper)
+        expect(pencil.pointDurability).toBe(36)
+    })
 })
