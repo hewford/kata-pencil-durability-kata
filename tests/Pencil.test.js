@@ -30,7 +30,13 @@ describe('writing with the pencil', () => {
     })
 
     it('writing uppercase with pencil should decrease the durability by 2', () => {
-        pencil.write('Hello', paper)
+        pencil.write('Hel23', paper)
         expect(pencil.pointDurability).toBe(44)
+    })
+
+    it('if pencil durability reaches 0, remaining characters should be blank spaces', () => {
+        pencil.pointDurability = 3
+        pencil.write('Hello', paper)
+        expect(paper.text).toBe('He   ')
     })
 })
