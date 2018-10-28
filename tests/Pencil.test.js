@@ -122,4 +122,11 @@ describe('using the eraser', () => {
         pencil.eraserDurability = 0
         expect(pencil.erase('nope')).toBe('cannot erase since the eraser is completed degraded')
     })
+
+    it('if the eraser degrades to 0 while erasing, it should only erase the characters up to the point that it reaches 0', () => {
+        pencil.write("Eraser? nope.", paper)
+        pencil.eraserDurability = 2
+        pencil.erase('nope', paper)
+        expect(paper.text).toBe('Eraser? no  .')
+    })
 })

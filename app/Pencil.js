@@ -30,16 +30,25 @@ class Pencil {
     }
 
     erase(text, paper) {
-        if (this.eraserDurability) {
-            const emptySpace = text.split('').reduce((emptySpace) => {
+        const countEmptySpace = (text) => {
+            return text.split('').reduce((emptySpace) => {
                 return emptySpace += ' '
             }, '')
+        }
 
-            const regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
+        if (this.eraserDurability) {
+            let regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
             
             if (paper.text.match(regExp)) {
-                this.eraserDurability -= emptySpace.length
-                paper.text = paper.text.replace(regExp, emptySpace)
+                this.eraserDurability -= countEmptySpace(text).length
+
+                if (this.eraserDurability<0) {
+                    text = text.slice(text.length+this.eraserDurability)
+                    regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
+                }
+
+                paper.text = paper.text.replace(regExp, countEmptySpace(text))
+                
                 return 'erased ' + text
             } else {
                 return 'text to be erased could not be found on the paper'

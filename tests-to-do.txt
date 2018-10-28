@@ -13,7 +13,7 @@
 √ should be able to replace eraser function input with whitespace
 √ if there are multiple occurrences of the word to erase, the last occurence should be erased
 √ eraser should degrade by 1 per character erased
-- if eraser durability reaches 0, then the eraser should stop working
+√ if eraser durability reaches 0, then the eraser should stop working
     ex: line: "hello bobby"
     erase: "bobby"
     eraser durability = 3
