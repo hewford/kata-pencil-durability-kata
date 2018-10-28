@@ -5,6 +5,7 @@ class Pencil {
     }
 
     write(text, paper) {
+        this.pointDurability -= text.length
         return paper.text += text
     }
 }

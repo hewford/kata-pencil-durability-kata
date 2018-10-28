@@ -21,7 +21,11 @@ describe('writing with the pencil', () => {
     })
 
     it('pencil should have a point durability', () => {
-        props.pointDurability = 50
         expect(pencil.pointDurability).toBe(50)
+    })
+
+    it ('writing with pencil should decrease the durability', () => {
+        pencil.write('hello', paper)
+        expect(pencil.pointDurability).toBe(45)
     })
 })
