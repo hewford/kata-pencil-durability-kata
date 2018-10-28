@@ -1,7 +1,7 @@
 √ should be able to instantiate pencil
 √ should be able to instantiate paper
 √ pencil should be able to write to paper
-- pencil should have a point durability
+√ pencil should have a point durability
 - writing should decrease pencil durability by 1 per lowercase and 2 per uppercase
 - if pencil durability reaches 0, remaining characters should be blank spaces
 - spaces and newlines should not degrade pencil
