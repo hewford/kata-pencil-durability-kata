@@ -34,6 +34,7 @@ class Pencil {
             return emptySpace += ' '
         }, '')
         const regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
+        this.eraserDurability -= emptySpace.length
         return paper.text = paper.text.replace(regExp, emptySpace)
     }
 }

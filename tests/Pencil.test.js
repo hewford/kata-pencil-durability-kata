@@ -100,4 +100,10 @@ describe('using the eraser', () => {
         pencil.erase('Hello', paper)
         expect(paper.text).toBe("Hello Pillar.       World!")
     })
+
+    it('erasing should degrade the eraser durability by 1 per character erased', () => {
+        pencil.write("Hello Pillar.", paper)
+        pencil.erase('Hello', paper)
+        expect(pencil.eraserDurability).toBe(95)
+    })
 })
