@@ -53,9 +53,11 @@ describe('using the sharpener', () => {
         pencil = new Pencil({...props})
         paper = new Paper()
     })
-    
-    it('pencil should have a function to sharpen it', () => {
-        expect(typeof pencil.sharpen).toBe('function')
+
+    it('pencil should be able to be sharpened to original point durability', () => {
+        pencil.write('Hello', paper)
+        pencil.sharpen()
+        expect(pencil.pointDurability).toBe(50)
     })
 
 })
