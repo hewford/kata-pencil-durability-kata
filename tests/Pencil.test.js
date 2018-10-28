@@ -68,4 +68,11 @@ describe('using the sharpener', () => {
         pencil.sharpen()
         expect(pencil.length).toBe(6)
     })
+
+    it('if length reaches 0, the pencil should not be able to be sharpened anymore', () => {
+        pencil.length = 0
+        pencil.pointDurability = 0
+        pencil.sharpen()
+        expect(pencil.pointDurability).toBe(0)
+    })
 })
