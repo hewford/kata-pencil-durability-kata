@@ -1,0 +1,23 @@
+- should be able to instantiate pencil
+- should be able to instantiate paper
+- pencil should be able to write to paper
+- pencil should have a point durability
+- writing should decrease pencil durability by 1 per lowercase and 2 per uppercase
+- if pencil durability reaches 0, remaining characters should be blank spaces
+- spaces and newlines should not degrade pencil
+- pencil should be able to be sharpened
+- pencil should be instantiated with a length property
+- sharpening pencil should degrade the length by 1
+- when length reaches 0, the pencil should not be able to be sharpened anymore
+- pencil should be instantiated with an eraser property
+- should be able to replace eraser function input with whitespace
+- if there are multiple occurences of the word to erase, the last occurence should be erased
+- eraser should degrade by 1 per character erase
+- if eraser durability reaches 0, then the eraser should stop working
+    ex: line: "hello bobby"
+    erase: "bobby"
+    eraser durability = 3
+    line = "hello bo
+        ---note: I imagine eraser will go backwards in loop and writing will go forward
+- should be able to edit by targeting most recent erased space and write in it.
+- if edit input overlaps following characters with a different character, the character should change to a "@'

@@ -1,0 +1,23 @@
+{
+  "name": "kata-pencil-durability-kata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hewford/kata-pencil-durability-kata.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hewford/kata-pencil-durability-kata/issues"
+  },
+  "homepage": "https://github.com/hewford/kata-pencil-durability-kata#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
