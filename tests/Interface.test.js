@@ -1,7 +1,9 @@
 const UserInterface = require('../app/Interface')
+const Pencil = require('../app/Pencil')
+const Paper = require('../app/Paper')
 
 describe('using Interface', () => {
-    let userInterface  = new UserInterface()
+    let userInterface  = new UserInterface({pointDurability: 50, length: 7, eraserDurability: 100})
     let session = userInterface.startSession()
     let events = session._events
 
@@ -17,5 +19,10 @@ describe('using Interface', () => {
         expect(events.keypress('w', {ctrl: true, name: 'w'})).toBe('WRITING:')
         expect(userInterface.active).toBe('write')
         expect(session.isRaw).toBe(false)
+    })
+
+    it('contains a property of class pencil and of class paper', () => {
+        expect(userInterface.pencil).toEqual(new Pencil({pointDurability: 50, length: 7, eraserDurability: 100}))
+        expect(userInterface.paper).toEqual(new Paper())
     })
 })

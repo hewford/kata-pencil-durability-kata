@@ -3,8 +3,10 @@ const Pencil = require('./Pencil')
 const Paper = require('./Paper')
 
 class UserInterface {
-    constructor() {
+    constructor(pencilProps) {
         this.active = null
+        this.paper = new Paper()
+        this.pencil = new Pencil(pencilProps)
     }
 
     startSession () {
@@ -17,6 +19,7 @@ class UserInterface {
                 process.stdin.setRawMode(false)
                 return "WRITING:"
             }
+
             return str
         })
     }
