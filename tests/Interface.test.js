@@ -10,6 +10,7 @@ describe('using Interface', () => {
     beforeEach(() => {
         session.isRaw = true
         userInterface.active = null
+        userInterface.text = ''
     })
 
     it('user interface should be able to start a process.stdin that listens for keypresses', () => {
@@ -35,5 +36,12 @@ describe('using Interface', () => {
         events.keypress('w', {ctrl: true, name: 'w'})
         events.keypress('a', {ctrl: false, name: 'a'})
         expect(userInterface.text).toBe('a')
+    })
+
+    it('when active is set to write, it each keypress should concat to property text multiple times', () => {
+        events.keypress('w', {ctrl: true, name: 'w'})
+        events.keypress('a', {ctrl: false, name: 'a'})
+        events.keypress('d', {ctrl: false, name: 'd'})
+        expect(userInterface.text).toBe('ad')
     })
 })

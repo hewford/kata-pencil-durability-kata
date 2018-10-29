@@ -7,7 +7,7 @@ class UserInterface {
         this.active = null
         this.paper = new Paper()
         this.pencil = new Pencil(pencilProps)
-        this.text = 'a'
+        this.text = ''
     }
 
     startSession () {
@@ -19,6 +19,8 @@ class UserInterface {
                 this.active = 'write'
                 process.stdin.setRawMode(false)
                 return "WRITING:"
+            } else if (this.active) {
+                this.text += str
             }
 
             return str
