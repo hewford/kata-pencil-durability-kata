@@ -7,6 +7,11 @@ describe('using Interface', () => {
     let session = userInterface.startSession()
     let events = session._events
 
+    beforeEach(() => {
+        session.isRaw = true
+        userInterface.active = null
+    })
+
     it('user interface should be able to start a process.stdin that listens for keypresses', () => {
         expect(typeof events.keypress).toBe('function')
     })
@@ -21,8 +26,14 @@ describe('using Interface', () => {
         expect(session.isRaw).toBe(false)
     })
 
-    it('contains a property of class pencil and of class paper', () => {
+    it('should contains a property of class pencil and of class paper', () => {
         expect(userInterface.pencil).toEqual(new Pencil({pointDurability: 50, length: 7, eraserDurability: 100}))
         expect(userInterface.paper).toEqual(new Paper())
+    })
+
+    it('when active is set to write, it each keypress should concat to property text at least once', () => {
+        events.keypress('w', {ctrl: true, name: 'w'})
+        events.keypress('a', {ctrl: false, name: 'a'})
+        expect(userInterface.text).toBe('a')
     })
 })

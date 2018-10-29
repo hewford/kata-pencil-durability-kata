@@ -7,6 +7,7 @@ class UserInterface {
         this.active = null
         this.paper = new Paper()
         this.pencil = new Pencil(pencilProps)
+        this.text = 'a'
     }
 
     startSession () {
