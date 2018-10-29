@@ -154,7 +154,11 @@ describe('editing erased space', () => {
         expect(paper.indexOfLastCharacterErased).toBe(10)
     })
 
-    it('pencil should have an edit function', () => {
-        expect(typeof pencil.edit).toBe('function')
+    it('pencil should be able to use edit to write in targeted white space made by the eraser', () => {
+        const text = 'Jean Valjean is the protagonist in Les Miserables'
+        pencil.write(text, paper)
+        pencil.erase('Les', paper)
+        pencil.edit('The', paper)
+        expect(paper.text).toBe('Jean Valjean is the protagonist in The Miserables')
     })
 })

@@ -1,6 +1,7 @@
 class Paper {
     constructor() {
-        this.text = ''
+        this.text = '',
+        this.indexOfLastCharacterErased = null
     }
 }
 
