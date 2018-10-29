@@ -60,6 +60,13 @@ class UserInterface {
                 this.pencil.sharpen()
                 this.production('PENCIL SHARPENED')
                 return 'PENCIL SHARPENED'
+
+            } else if (key.ctrl && key.name === 'd') {
+                process.stdin.setRawMode(false);
+                this.active = 'edit'
+                this.production('EDITING:')
+                return 'EDITING:'
+                
             } else if (key.name === 'enter' && this.active) {
                 process.stdout.write('\x1Bc')
                 this.production(this.pencil[this.active](this.text, this.paper))

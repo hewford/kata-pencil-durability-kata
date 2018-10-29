@@ -2,7 +2,26 @@ const UserInterface = require('../app/Interface')
 const Pencil = require('../app/Pencil')
 const Paper = require('../app/Paper')
 
+
+
 describe('using Interface', () => {
+    const writeExample = () => {
+        events.keypress('w', {ctrl: true, name: 'w'})
+        text.split('').forEach((letter)=>{
+            events.keypress(letter, {ctrl: false, name: letter})
+        })
+        events.keypress('enter', {ctrl: false, name: 'enter'})
+    }
+
+    const eraseExample = () => {
+        events.keypress('e', {ctrl: true, name: 'e'})
+        const erase = 'Les'
+        erase.split('').forEach((letter)=>{
+            events.keypress(letter, {ctrl: false, name: letter})
+        })
+        events.keypress('enter', {ctrl: false, name: 'enter'})
+    }
+
     const text = 'Jean Valjean is the protagonist in Les Miserables'
     let userInterface  = new UserInterface({pointDurability: 50, length: 7, eraserDurability: 100}, true)
     let session = userInterface.startSession()
@@ -37,11 +56,7 @@ describe('using Interface', () => {
 
     describe('after writing to text', () => {
         beforeEach(() => {
-            events.keypress('w', {ctrl: true, name: 'w'})
-            text.split('').forEach((letter)=>{
-                events.keypress(letter, {ctrl: false, name: letter})
-            })
-            events.keypress('enter', {ctrl: false, name: 'enter'})
+            writeExample()
         })
 
         it('pressing enter should submit the text to the pencil function write', () => {
@@ -63,11 +78,7 @@ describe('using Interface', () => {
 
     describe('using the eraser', () => {
         beforeEach(() => {
-            events.keypress('w', {ctrl: true, name: 'w'})
-            text.split('').forEach((letter)=>{
-                events.keypress(letter, {ctrl: false, name: letter})
-            })
-            events.keypress('enter', {ctrl: false, name: 'enter'})
+            writeExample()
         })
 
         it('when control and e are pressed, property active should equal "erase" and rawMode should equal false so that user can enter an entire string.', () => {
@@ -77,13 +88,7 @@ describe('using Interface', () => {
         })
 
         it('when erase is active and this.text has a value, pressing enter should erase the characters from the paper', () => {
-            events.keypress('e', {ctrl: true, name: 'e'})
-            const erase = 'Les'
-            erase.split('').forEach((letter)=>{
-                events.keypress(letter, {ctrl: false, name: letter})
-            })
-            events.keypress('enter', {ctrl: false, name: 'enter'})
-    
+            eraseExample()
             expect(userInterface.paper.text).toBe('Jean Valjean is the protagonist in     Miserables')
         })
     })
@@ -93,6 +98,19 @@ describe('using Interface', () => {
             userInterface.pencil.pointDurability = 2
             expect(events.keypress('s', {ctrl: true, name: 's'})).toBe('PENCIL SHARPENED')
             expect(userInterface.pencil.pointDurability).toBe(userInterface.pencil.originalPointDurability)
+        })
+    })
+
+    describe('using edit', () => {
+        it('when control and d are pressed, property active should equal "edit" and rawMode should equal false so that user can enter an entire string', () => {
+            writeExample()
+            eraseExample()
+            expect(events.keypress('d', {ctrl: true, name: 'd'})).toBe('EDITING:')
+            events.keypress('T', {ctrl: false, name: 'T'})
+            events.keypress('h', {ctrl: false, name: 'h'})
+            events.keypress('e', {ctrl: false, name: 'e'})
+            events.keypress('enter', {ctrl: false, name: 'enter'})
+            expect(userInterface.paper.text).toBe('Jean Valjean is the protagonist in The Miserables')
         })
     })
 })
