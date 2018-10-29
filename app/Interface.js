@@ -11,6 +11,7 @@ class UserInterface {
         this.testing = testing
         this.production = this.production.bind(this)
         this.listKeys = this.listKeys.bind(this)
+        this.printInterface = this.printInterface.bind(this)
 
         this.keyMap = new Map();
         this.keyMap.set('ctr + w', 'write');
@@ -36,18 +37,30 @@ class UserInterface {
         console.log();
     }
 
+    printInterface () {
+        this.production('point durability: ' + this.pencil.pointDurability)
+        this.production('eraser durability: ' + this.pencil.eraserDurability)
+        this.production('pencil length: ' + this.pencil.length)
+        this.production('\n=======YOUR DOCUMENT=======\n')
+        this.production(this.paper.text)
+        this.production('\n===========================')
+        this.listKeys()
+    }
+
     startSession () {
+        process.stdout.write('\x1Bc')
+        this.printInterface()
         readline.emitKeypressEvents(process.stdin)
         process.stdin.setRawMode(true)
-        this.testing ? '' : this.listKeys()
     
         return process.stdin.on('keypress', (str, key) => {
             if (key.ctrl && key.name === 'c') {
-                process.exit();
+                process.exit()
+            
             } else if (key.ctrl && key.name === 'w') {
                 this.active = 'write'
                 process.stdin.setRawMode(false)
-                this.production('WRITING:')
+                this.production('WRITING:\n*note: ctr + n = newline')
                 return "WRITING:"
 
             } else if (key.ctrl && key.name === 'e') {
@@ -58,6 +71,8 @@ class UserInterface {
 
             } else if (key.ctrl && key.name === 's') {
                 this.pencil.sharpen()
+                process.stdout.write('\x1Bc')
+                this.printInterface()
                 this.production('PENCIL SHARPENED')
                 return 'PENCIL SHARPENED'
 
@@ -69,20 +84,19 @@ class UserInterface {
                 
             } else if (key.name === 'enter' && this.active) {
                 process.stdout.write('\x1Bc')
-                this.production(this.pencil[this.active](this.text, this.paper))
-                this.production('point durability: ' + this.pencil.pointDurability)
-                this.production('eraser durability: ' + this.pencil.eraserDurability)
-                this.production('pencil length: ' + this.pencil.length)
-                this.production('\n=======YOUR DOCUMENT=======\n')
-                this.production(this.paper.text)
-                this.production('\n===========================')
+                const action = this.pencil[this.active](this.text, this.paper)
+                this.printInterface()
+                this.production(action)
                 this.text = ''
                 this.active = false
                 process.stdin.setRawMode(true)
                 
-                this.testing ? '' : this.listKeys()
             } else if (this.active) {
-                this.text += str
+                if (key.ctrl && key.name === 'n') {
+                    this.text += '\n'
+                } else {
+                    this.text += str
+                }
             }
 
             return str

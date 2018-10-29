@@ -84,6 +84,8 @@ class Pencil {
             }
         }
         paper.text = paperText.join('')
+
+        return 'wrote "'+text+'" in erased space'
     }
 }
 
