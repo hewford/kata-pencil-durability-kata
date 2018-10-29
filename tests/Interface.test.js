@@ -66,5 +66,9 @@ describe('using Interface', () => {
         it('pressing enter should reset text property to an empty string', () => {
             expect(userInterface.text).toBe('')
         })
+
+        it('pressing enter should reset active property to false', () => {
+            expect(userInterface.active).toBe(false)
+        })
     })
 })
