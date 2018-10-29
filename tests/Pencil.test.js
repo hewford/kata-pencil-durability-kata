@@ -120,13 +120,37 @@ describe('using the eraser', () => {
     it('if eraser durability reaches 0, then the eraser should stop working', () => {
         pencil.write("Eraser? nope.", paper)
         pencil.eraserDurability = 0
-        expect(pencil.erase('nope')).toBe('cannot erase since the eraser is completed degraded')
+        expect(pencil.erase('nope', paper)).toBe('cannot erase since the eraser is completed degraded')
+        expect(paper.text).toBe('Eraser? nope.')
     })
 
     it('if the eraser degrades to 0 while erasing, it should only erase the characters up to the point that it reaches 0', () => {
         pencil.write("Eraser? nope.", paper)
         pencil.eraserDurability = 2
-        pencil.erase('nope', paper)
+        expect(pencil.erase('nope', paper)).toBe('erased pe')
         expect(paper.text).toBe('Eraser? no  .')
+    })
+})
+
+describe('editing erased space', () => {
+    let pencil, paper
+    let props = {pointDurability: 50, length: 7, eraserDurability: 100}
+    beforeEach(() => {
+        pencil = new Pencil({...props})
+        paper = new Paper()
+    })
+
+    it('paper should remember the index of the last space erased', () => {
+        const text = 'Jean Valjean is the protagonist in Les Miserables'
+        pencil.write(text, paper)
+        pencil.erase('Les', paper)
+        expect(paper.indexOfLastCharacterErased).toBe(35)
+    })
+
+    it('index of last character erased should be accurate if the eraser runs out', () => {
+        pencil.write("Eraser? nope.", paper)
+        pencil.eraserDurability = 2
+        expect(pencil.erase('nope', paper)).toBe('erased pe')
+        expect(paper.indexOfLastCharacterErased).toBe(10)
     })
 })

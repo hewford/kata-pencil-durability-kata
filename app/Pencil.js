@@ -43,12 +43,15 @@ class Pencil {
                 this.eraserDurability -= countEmptySpace(text).length
 
                 if (this.eraserDurability<0) {
-                    text = text.slice(text.length+this.eraserDurability)
+                    text = text.slice(text.length-Math.abs(this.eraserDurability))
                     regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
                 }
 
+                // remember last index of an erased character
+                paper.indexOfLastCharacterErased = paper.text.indexOf(text)
+
                 paper.text = paper.text.replace(regExp, countEmptySpace(text))
-                
+
                 return 'erased ' + text
             } else {
                 return 'text to be erased could not be found on the paper'
