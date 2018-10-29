@@ -36,13 +36,19 @@ describe('writing with the pencil', () => {
 
     it('if pencil durability reaches 0, remaining characters should be blank spaces', () => {
         pencil.pointDurability = 3
-        pencil.write('Hello', paper)
+        expect(pencil.write('Hello', paper)).toBe('wrote He   ')
         expect(paper.text).toBe('He   ')
     })
 
     it('writing spaces and newlines should not degrade pencil', () => {
         pencil.write('Hello \nPillar!', paper)
         expect(pencil.pointDurability).toBe(36)
+    })
+
+    it('Point durability should never fall below 0', () => {
+        pencil.write('Les Miserables is the best! Yeah', paper)
+        pencil.write('Les Miserables is the best! Yeah', paper)
+        expect(pencil.pointDurability).toBe(0)
     })
 })
 
@@ -129,6 +135,12 @@ describe('using the eraser', () => {
         pencil.eraserDurability = 2
         expect(pencil.erase('nope', paper)).toBe('erased pe')
         expect(paper.text).toBe('Eraser? no  .')
+    })
+
+    it('erasing works with newlines', () => {
+        pencil.write("\na \nHello Pillar.", paper)
+        expect(pencil.erase('Hello', paper)).toBe('erased Hello')
+        expect(paper.text).toBe('\na \n      Pillar.')
     })
 })
 

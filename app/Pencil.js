@@ -11,15 +11,16 @@ class Pencil {
         this.pointDurability -= text.match(/[^A-Z\s]/g) ? text.match(/[^A-Z\s]/g).length : 0
 
         if (this.pointDurability <= 0) {
-            let regExp = new RegExp('\\w{'+Math.abs(this.pointDurability)+'}$')
+            let regExp = new RegExp('\.{'+Math.abs(this.pointDurability)+'}$')
             // store number of empty spaces in a string
             const emptySpace = text.match(regExp)[0].split('').reduce((emptySpace) => {
                 return emptySpace += ' '
             }, '')
             text = text.replace(regExp, emptySpace)
+            this.pointDurability = 0
         }
-
-        return paper.text += text
+        paper.text += text
+        return 'wrote ' + text 
     }
 
     sharpen() {
