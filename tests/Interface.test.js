@@ -3,7 +3,8 @@ const Pencil = require('../app/Pencil')
 const Paper = require('../app/Paper')
 
 describe('using Interface', () => {
-    let userInterface  = new UserInterface({pointDurability: 50, length: 7, eraserDurability: 100})
+    const text = 'Jean Valjean is the protagonist in Les Miserables'
+    let userInterface  = new UserInterface({pointDurability: 50, length: 7, eraserDurability: 100}, true)
     let session = userInterface.startSession()
     let events = session._events
 
@@ -43,5 +44,23 @@ describe('using Interface', () => {
         events.keypress('a', {ctrl: false, name: 'a'})
         events.keypress('d', {ctrl: false, name: 'd'})
         expect(userInterface.text).toBe('ad')
+    })
+
+    describe('after writing to text', () => {
+        beforeEach(() => {
+            events.keypress('w', {ctrl: true, name: 'w'})
+            text.split('').forEach((letter)=>{
+                events.keypress(letter, {ctrl: false, name: letter})
+            })
+            events.keypress('enter', {ctrl: false, name: 'enter'})
+        })
+
+        it('pressing enter should submit the text to the pencil function write', () => {
+            expect(userInterface.paper.text).toBe(text)
+        })
+
+        it('pressing enter should return process to raw mode', () => {
+            expect(session.isRaw).toBe(true)
+        })
     })
 })
