@@ -37,7 +37,7 @@ class UserInterface {
                 this.production('\n=======YOUR DOCUMENT=======\n')
                 this.production(this.paper.text)
                 this.production('\n===========================')
-
+                this.text = ''
                 process.stdin.setRawMode(true)
             } else if (this.active) {
                 this.text += str

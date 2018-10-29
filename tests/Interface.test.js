@@ -62,5 +62,9 @@ describe('using Interface', () => {
         it('pressing enter should return process to raw mode', () => {
             expect(session.isRaw).toBe(true)
         })
+
+        it('pressing enter should reset text property to an empty string', () => {
+            expect(userInterface.text).toBe('')
+        })
     })
 })
