@@ -168,4 +168,10 @@ describe('editing erased space', () => {
         pencil.edit('That French Book', paper)
         expect(paper.text).toBe('Jean Valjean is the protagonist in ThatM@@e@@@l@@ok')
     })
+
+    it('editing should not accept newlines or returns', () => {
+        pencil.write(text, paper)
+        pencil.erase('Les', paper)
+        expect(pencil.edit('That\r French\n Book', paper)).toBe('invalid entry of either newline or return')
+    })
 })

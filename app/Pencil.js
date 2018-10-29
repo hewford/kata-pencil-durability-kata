@@ -62,6 +62,9 @@ class Pencil {
     }
 
     edit(text, paper) {
+        if(text.match(/[\n\r]/)) {
+            return 'invalid entry of either newline or return'
+        }
         let paperText = paper.text.split('')
         for (let target = paper.indexOfLastCharacterErased, index = 0; index < text.length; index++) {
             if (paperText[target + index] !== ' ' && paperText[target + index] !== undefined && text[index] !== ' ' && paperText[target + index] !== text[index]) {
