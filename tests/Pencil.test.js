@@ -186,4 +186,12 @@ describe('editing erased space', () => {
         pencil.erase('Les', paper)
         expect(pencil.edit('That\r French\n Book', paper)).toBe('invalid entry of either newline or return')
     })
+
+    it('editing should also degrade the pencil point', () => {
+        pencil.write(text, paper)
+        pencil.erase('Les', paper)
+        pencil.sharpen()
+        pencil.edit('That French Book', paper)
+        expect(pencil.pointDurability).toBe(33)
+    })
 })

@@ -4,11 +4,17 @@ class Pencil {
         this.pointDurability = props.pointDurability
         this.length = props.length
         this.eraserDurability = props.eraserDurability
+
+        this.degradePoint = this.degradePoint.bind(this)
+    }
+
+    degradePoint(text) {
+        this.pointDurability -= text.match(/[A-Z]/g) ? text.match(/[A-Z]/g).length*2 : 0
+        this.pointDurability -= text.match(/[^A-Z\s]/g) ? text.match(/[^A-Z\s]/g).length : 0
     }
 
     write(text, paper) {
-        this.pointDurability -= text.match(/[A-Z]/g) ? text.match(/[A-Z]/g).length*2 : 0
-        this.pointDurability -= text.match(/[^A-Z\s]/g) ? text.match(/[^A-Z\s]/g).length : 0
+        this.degradePoint(text)
 
         if (this.pointDurability <= 0) {
             let regExp = new RegExp('\.{'+Math.abs(this.pointDurability)+'}$')
@@ -65,6 +71,7 @@ class Pencil {
     }
 
     edit(text, paper) {
+        this.degradePoint(text)
         if(text.match(/[\n\r]/)) {
             return 'invalid entry of either newline or return'
         }
