@@ -120,7 +120,7 @@ describe('using the eraser', () => {
 
     it('successful erasing should alert the user what was erased', () => {
         pencil.write("Hello Pillar.", paper)
-        expect(pencil.erase('Hello', paper)).toBe('erased Hello. remaining eraser durability is 95')
+        expect(pencil.erase('Hello', paper)).toBe('erased "Hello". remaining eraser durability is 95')
     })
 
     it('if eraser durability reaches 0, then the eraser should stop working', () => {
@@ -133,13 +133,13 @@ describe('using the eraser', () => {
     it('if the eraser degrades to 0 while erasing, it should only erase the characters up to the point that it reaches 0', () => {
         pencil.write("Eraser? nope.", paper)
         pencil.eraserDurability = 2
-        expect(pencil.erase('nope', paper)).toBe('erased pe. remaining eraser durability is 0')
+        expect(pencil.erase('nope', paper)).toBe('erased "pe". remaining eraser durability is 0')
         expect(paper.text).toBe('Eraser? no  .')
     })
 
     it('erasing works with newlines', () => {
         pencil.write("\na \nHello Pillar.", paper)
-        expect(pencil.erase('Hello', paper)).toBe('erased Hello. remaining eraser durability is 95')
+        expect(pencil.erase('Hello', paper)).toBe('erased "Hello". remaining eraser durability is 95')
         expect(paper.text).toBe('\na \n      Pillar.')
     })
 })
@@ -163,7 +163,7 @@ describe('editing erased space', () => {
     it('index of last character erased should be accurate if the eraser runs out', () => {
         pencil.write("Eraser? nope.", paper)
         pencil.eraserDurability = 2
-        expect(pencil.erase('nope', paper)).toBe('erased pe. remaining eraser durability is 0')
+        expect(pencil.erase('nope', paper)).toBe('erased "pe". remaining eraser durability is 0')
         expect(paper.indexOfLastCharacterErased).toBe(10)
     })
 

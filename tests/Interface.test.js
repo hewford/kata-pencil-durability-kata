@@ -87,4 +87,12 @@ describe('using Interface', () => {
             expect(userInterface.paper.text).toBe('Jean Valjean is the protagonist in     Miserables')
         })
     })
+
+    describe('using the sharpener', () => {
+        it('when control and s are pressed pencil should sharpen.', () => {
+            userInterface.pencil.pointDurability = 2
+            expect(events.keypress('s', {ctrl: true, name: 's'})).toBe('PENCIL SHARPENED')
+            expect(userInterface.pencil.pointDurability).toBe(userInterface.pencil.originalPointDurability)
+        })
+    })
 })

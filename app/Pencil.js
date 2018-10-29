@@ -55,7 +55,7 @@ class Pencil {
 
                 paper.text = paper.text.replace(regExp, countEmptySpace(text))
 
-                return 'erased ' + text + '. remaining eraser durability is ' + this.eraserDurability
+                return 'erased "' + text + '". remaining eraser durability is ' + this.eraserDurability
             } else {
                 return 'text to be erased could not be found on the paper'
             }
