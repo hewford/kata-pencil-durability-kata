@@ -60,6 +60,10 @@ class Pencil {
             return 'cannot erase since the eraser is completed degraded'
         }
     }
+
+    edit() {
+        
+    }
 }
 
 module.exports = Pencil

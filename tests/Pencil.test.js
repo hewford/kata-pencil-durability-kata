@@ -153,4 +153,8 @@ describe('editing erased space', () => {
         expect(pencil.erase('nope', paper)).toBe('erased pe')
         expect(paper.indexOfLastCharacterErased).toBe(10)
     })
+
+    it('pencil should have an edit function', () => {
+        expect(typeof pencil.edit).toBe('function')
+    })
 })
