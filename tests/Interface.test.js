@@ -71,4 +71,12 @@ describe('using Interface', () => {
             expect(userInterface.active).toBe(false)
         })
     })
+
+    describe('using the eraser', () => {
+        it('when control and e are pressed, property active should equal "erase" and rawMode should equal false so that user can enter an entire string.', () => {
+            expect(events.keypress('e', {ctrl: true, name: 'e'})).toBe('ERASING:')
+            expect(userInterface.active).toBe('erase')
+            expect(session.isRaw).toBe(false)
+        })
+    })
 })

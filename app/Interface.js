@@ -31,6 +31,12 @@ class UserInterface {
                 this.production('WRITING:')
                 return "WRITING:"
 
+            } else if (key.ctrl && key.name === 'e') {
+                this.active = 'erase'
+                process.stdin.setRawMode(false)
+                this.production('ERASING:')
+                return "ERASING:"
+
             } else if (key.name === 'enter' && this.active) {
                 process.stdout.write('\x1Bc')
                 this.production(this.pencil[this.active](this.text, this.paper))
@@ -38,7 +44,7 @@ class UserInterface {
                 this.production(this.paper.text)
                 this.production('\n===========================')
                 this.text = '', this.active = false, process.stdin.setRawMode(true)
-                
+
             } else if (this.active) {
                 this.text += str
             }
