@@ -28,6 +28,7 @@ class Pencil {
             this.pointDurability = this.originalPointDurability
             this.length--
         }
+        return 'sharpened pencil to original durability of: ' + this.pointDurability
     }
 
     erase(text, paper) {
@@ -46,6 +47,7 @@ class Pencil {
                 if (this.eraserDurability<0) {
                     text = text.slice(text.length-Math.abs(this.eraserDurability))
                     regExp = new RegExp(text+'\(\?\!\.\*'+text+'\)')
+                    this.eraserDurability = 0
                 }
 
                 // remember last index of an erased character
@@ -53,7 +55,7 @@ class Pencil {
 
                 paper.text = paper.text.replace(regExp, countEmptySpace(text))
 
-                return 'erased ' + text
+                return 'erased ' + text + '. remaining eraser durability is ' + this.eraserDurability
             } else {
                 return 'text to be erased could not be found on the paper'
             }
