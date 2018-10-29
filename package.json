@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "testwatch": "jest --watchAll",
+    "test": "jest --watchAll",
     "start": "node main.js"
   },
   "repository": {

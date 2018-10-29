@@ -6,6 +6,7 @@ class Pencil {
         this.eraserDurability = props.eraserDurability
 
         this.degradePoint = this.degradePoint.bind(this)
+        this.transformTextForDegradedPoint = this.transformTextForDegradedPoint.bind(this)
     }
 
     degradePoint(text) {
@@ -13,18 +14,24 @@ class Pencil {
         this.pointDurability -= text.match(/[^A-Z\s]/g) ? text.match(/[^A-Z\s]/g).length : 0
     }
 
+    transformTextForDegradedPoint(text) {
+        let regExp = new RegExp('\.{'+Math.abs(this.pointDurability)+'}$')
+        // store number of empty spaces in a string
+        const emptySpace = text.match(regExp)[0].split('').reduce((emptySpace) => {
+            return emptySpace += ' '
+        }, '')
+        this.pointDurability = 0
+
+        return text = text.replace(regExp, emptySpace)
+    }
+
     write(text, paper) {
         this.degradePoint(text)
 
         if (this.pointDurability <= 0) {
-            let regExp = new RegExp('\.{'+Math.abs(this.pointDurability)+'}$')
-            // store number of empty spaces in a string
-            const emptySpace = text.match(regExp)[0].split('').reduce((emptySpace) => {
-                return emptySpace += ' '
-            }, '')
-            text = text.replace(regExp, emptySpace)
-            this.pointDurability = 0
+            text = this.transformTextForDegradedPoint(text)   
         }
+        
         paper.text += text
         return 'wrote ' + text 
     }
@@ -71,9 +78,12 @@ class Pencil {
     }
 
     edit(text, paper) {
-        this.degradePoint(text)
         if(text.match(/[\n\r]/)) {
             return 'invalid entry of either newline or return'
+        }
+        this.degradePoint(text)
+        if (this.pointDurability <= 0) {
+            text = this.transformTextForDegradedPoint(text)   
         }
         let paperText = paper.text.split('')
         for (let target = paper.indexOfLastCharacterErased, index = 0; index < text.length; index++) {

@@ -3,7 +3,7 @@ const Pencil = require('./Pencil')
 const Paper = require('./Paper')
 
 class UserInterface {
-    constructor(pencilProps, testing) {
+    constructor(pencilProps, testing, process) {
         this.active = null
         this.paper = new Paper()
         this.pencil = new Pencil(pencilProps)
@@ -12,6 +12,7 @@ class UserInterface {
         this.production = this.production.bind(this)
         this.listKeys = this.listKeys.bind(this)
         this.printInterface = this.printInterface.bind(this)
+        this.endProcess = process
 
         this.keyMap = new Map();
         this.keyMap.set('ctr + w', 'write');
@@ -44,11 +45,11 @@ class UserInterface {
         this.production('\n=======YOUR DOCUMENT=======\n')
         this.production(this.paper.text)
         this.production('\n===========================')
-        this.listKeys()
+        this.testing ? '' : this.listKeys()
     }
 
     startSession () {
-        process.stdout.write('\x1Bc')
+        this.testing ? '' : process.stdout.write('\x1Bc')
         this.printInterface()
         readline.emitKeypressEvents(process.stdin)
         process.stdin.setRawMode(true)
@@ -71,7 +72,7 @@ class UserInterface {
 
             } else if (key.ctrl && key.name === 's') {
                 this.pencil.sharpen()
-                process.stdout.write('\x1Bc')
+                this.testing ? '' : process.stdout.write('\x1Bc')
                 this.printInterface()
                 this.production('PENCIL SHARPENED')
                 return 'PENCIL SHARPENED'
@@ -83,7 +84,7 @@ class UserInterface {
                 return 'EDITING:'
                 
             } else if (key.name === 'enter' && this.active) {
-                process.stdout.write('\x1Bc')
+                this.testing ? '' : process.stdout.write('\x1Bc')
                 const action = this.pencil[this.active](this.text, this.paper)
                 this.printInterface()
                 this.production(action)

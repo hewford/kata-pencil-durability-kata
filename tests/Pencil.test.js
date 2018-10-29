@@ -177,6 +177,7 @@ describe('editing erased space', () => {
     it('if edit overlaps characters, the character should be replaced with an @ symbol if they are not the same character', () => {
         pencil.write(text, paper)
         pencil.erase('Les', paper)
+        pencil.sharpen()
         pencil.edit('That French Book', paper)
         expect(paper.text).toBe('Jean Valjean is the protagonist in ThatM@@e@@@l@@ok')
     })
@@ -184,6 +185,7 @@ describe('editing erased space', () => {
     it('editing should not accept newlines or returns', () => {
         pencil.write(text, paper)
         pencil.erase('Les', paper)
+        pencil.sharpen()
         expect(pencil.edit('That\r French\n Book', paper)).toBe('invalid entry of either newline or return')
     })
 
@@ -193,5 +195,13 @@ describe('editing erased space', () => {
         pencil.sharpen()
         pencil.edit('That French Book', paper)
         expect(pencil.pointDurability).toBe(33)
+    })
+
+    it('if pencil durability reaches 0 while editing, remaining characters should be blank spaces', () => {
+        pencil.write(text, paper)
+        pencil.erase('Les', paper)
+        pencil.pointDurability = 7
+        pencil.edit('That French Book', paper)
+        expect(paper.text).toBe('Jean Valjean is the protagonist in ThatM@serables')
     })
 })

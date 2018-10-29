@@ -1,4 +1,4 @@
 
 const UserInterface = require('./app/Interface')
-const userInterface = new UserInterface({pointDurability: 50, length: 7, eraserDurability: 100})
+const userInterface = new UserInterface({pointDurability: 50, length: 7, eraserDurability: 100}, false, process.exit)
 userInterface.startSession()
