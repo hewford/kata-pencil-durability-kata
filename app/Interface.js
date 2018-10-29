@@ -12,6 +12,11 @@ class UserInterface {
         process.stdin.setRawMode(true);
     
         return process.stdin.on('keypress', (str, key) => {
+            if (key.ctrl && key.name === 'w') {
+                this.active = 'write'
+                process.stdin.setRawMode(false)
+                return "WRITING:"
+            }
             return str
         })
     }
