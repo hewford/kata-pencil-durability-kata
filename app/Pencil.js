@@ -64,7 +64,11 @@ class Pencil {
     edit(text, paper) {
         let paperText = paper.text.split('')
         for (let target = paper.indexOfLastCharacterErased, index = 0; index < text.length; index++) {
-            paperText[target + index] = text[index]
+            if (paperText[target + index] !== ' ' && paperText[target + index] !== undefined && text[index] !== ' ' && paperText[target + index] !== text[index]) {
+                paperText[target + index] = '@'
+            } else {
+                text[index] !== ' ' ? paperText[target + index] = text[index] : ''
+            }
         }
         paper.text = paperText.join('')
     }

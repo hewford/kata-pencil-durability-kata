@@ -133,15 +133,16 @@ describe('using the eraser', () => {
 })
 
 describe('editing erased space', () => {
+    const text = 'Jean Valjean is the protagonist in Les Miserables'                  
     let pencil, paper
     let props = {pointDurability: 50, length: 7, eraserDurability: 100}
+
     beforeEach(() => {
         pencil = new Pencil({...props})
         paper = new Paper()
     })
 
     it('paper should remember the index of the last space erased', () => {
-        const text = 'Jean Valjean is the protagonist in Les Miserables'
         pencil.write(text, paper)
         pencil.erase('Les', paper)
         expect(paper.indexOfLastCharacterErased).toBe(35)
@@ -155,10 +156,16 @@ describe('editing erased space', () => {
     })
 
     it('pencil should be able to use edit to write in targeted white space made by the eraser', () => {
-        const text = 'Jean Valjean is the protagonist in Les Miserables'
         pencil.write(text, paper)
         pencil.erase('Les', paper)
         pencil.edit('The', paper)
         expect(paper.text).toBe('Jean Valjean is the protagonist in The Miserables')
+    })
+
+    it('if edit overlaps characters, the character should be replaced with an @ symbol if they are not the same character', () => {
+        pencil.write(text, paper)
+        pencil.erase('Les', paper)
+        pencil.edit('That French Book', paper)
+        expect(paper.text).toBe('Jean Valjean is the protagonist in ThatM@@e@@@l@@ok')
     })
 })

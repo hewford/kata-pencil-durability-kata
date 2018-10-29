@@ -20,4 +20,4 @@
     line = "hello bo
         ---note: I imagine eraser will go backwards in loop and writing will go forward
 √ should be able to edit by targeting most recent erased space and write in it.
-- if edit input overlaps following characters with a different character, the character should change to a "@'
+√ if edit input overlaps following characters with a different character, the character should change to a "@'
