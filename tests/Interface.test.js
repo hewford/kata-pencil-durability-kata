@@ -1,8 +1,9 @@
 const UserInterface = require('../app/Interface')
 
 describe('using Interface', () => {
-    it('Should be able to instantiate Interface', () => {
+    it('user interface should be able to start a process.stdin that listens for keypresses', () => {
         const userInterface = new UserInterface()
-        expect(typeof userInterface).toBe('object')
+        const events = userInterface.startSession()._events
+        expect(typeof events.keypress).toBe('function')
     })
 })
