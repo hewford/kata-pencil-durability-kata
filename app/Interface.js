@@ -3,23 +3,15 @@ const Pencil = require('./Pencil')
 const Paper = require('./Paper')
 
 class UserInterface {
-    constructor(pencilProps, testing, process) {
+    constructor(pencilProps, testing) {
         this.active = null
         this.paper = new Paper()
         this.pencil = new Pencil(pencilProps)
         this.text = ''
         this.testing = testing
         this.production = this.production.bind(this)
-        this.listKeys = this.listKeys.bind(this)
+        this.startTool = this.startTool.bind(this)
         this.printInterface = this.printInterface.bind(this)
-        this.endProcess = process
-
-        this.keyMap = new Map();
-        this.keyMap.set('ctr + w', 'write');
-        this.keyMap.set('ctr + s', 'sharpen');
-        this.keyMap.set('ctr + e', 'eraser');
-        this.keyMap.set('ctr + d', 'edit');
-        this.keyMap.set('ctr + c', 'exit');
     }
 
     production(input) {
@@ -30,68 +22,67 @@ class UserInterface {
         }
     }
 
-    listKeys () {
-        console.log(`keys:`);
-        this.keyMap.forEach((value, key) => {
-          console.log(`${key} - ${value}`);
-        });
-        console.log();
-    }
-
-    printInterface () {
+    printInterface() {
         this.production('point durability: ' + this.pencil.pointDurability)
         this.production('eraser durability: ' + this.pencil.eraserDurability)
         this.production('pencil length: ' + this.pencil.length)
         this.production('\n=======YOUR DOCUMENT=======\n')
         this.production(this.paper.text)
         this.production('\n===========================')
-        this.testing ? '' : this.listKeys()
+        this.active ? '' : this.production('      write\n        ∆\nedit <--|--> sharpen\n        V\n      erase')
     }
 
-    startSession () {
+    startTool(mode) {
+        process.stdin.setRawMode(mode || false)
+        this.testing ? '' : process.stdout.write('\x1Bc')
+        this.printInterface()
+
+    }
+
+    startSession() {
         this.testing ? '' : process.stdout.write('\x1Bc')
         this.printInterface()
         readline.emitKeypressEvents(process.stdin)
         process.stdin.setRawMode(true)
-    
+
         return process.stdin.on('keypress', (str, key) => {
             if (key.ctrl && key.name === 'c') {
                 process.exit()
-            
-            } else if (key.ctrl && key.name === 'w') {
+
+            } else if (key.name === 'up') {
                 this.active = 'write'
-                process.stdin.setRawMode(false)
-                this.production('WRITING:\n*note: ctr + n = newline')
+                this.startTool()
+                this.production('*note: ctr + n = newline\n*press "enter" to submit/exit\nWRITING:\n')
                 return "WRITING:"
 
-            } else if (key.ctrl && key.name === 'e') {
+            } else if (key.name === 'down') {
                 this.active = 'erase'
-                process.stdin.setRawMode(false)
-                this.production('ERASING:')
+                this.startTool()
+                this.production('*note: press "enter" to submit/exit\nERASING:\n')
                 return "ERASING:"
 
-            } else if (key.ctrl && key.name === 's') {
+            } else if (key.name === 'right') {
                 this.pencil.sharpen()
-                this.testing ? '' : process.stdout.write('\x1Bc')
-                this.printInterface()
+                this.startTool(true)
                 this.production('PENCIL SHARPENED')
                 return 'PENCIL SHARPENED'
 
-            } else if (key.ctrl && key.name === 'd') {
-                process.stdin.setRawMode(false);
+            } else if (key.name === 'left') {
                 this.active = 'edit'
-                this.production('EDITING:')
+                this.startTool()
+                this.production('*note: press "enter" to submit/exit\nEDITING:\n')
                 return 'EDITING:'
-                
+
             } else if (key.name === 'enter' && this.active) {
-                this.testing ? '' : process.stdout.write('\x1Bc')
-                const action = this.pencil[this.active](this.text, this.paper)
-                this.printInterface()
-                this.production(action)
-                this.text = ''
+                let action = null
+                this.text === '' ? '' : action = this.pencil[this.active](this.text, this.paper)
                 this.active = false
                 process.stdin.setRawMode(true)
+                this.printInterface()
+                action ? this.production(action) : ''
+                this.text = ''
                 
+
             } else if (this.active) {
                 if (key.ctrl && key.name === 'n') {
                     this.text += '\n'

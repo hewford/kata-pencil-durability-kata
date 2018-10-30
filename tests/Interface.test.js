@@ -6,7 +6,7 @@ const Paper = require('../app/Paper')
 
 describe('using Interface', () => {
     const writeExample = () => {
-        events.keypress('w', {ctrl: true, name: 'w'})
+        events.keypress(null, {name: 'up'})
         text.split('').forEach((letter)=>{
             events.keypress(letter, {ctrl: false, name: letter})
         })
@@ -14,7 +14,7 @@ describe('using Interface', () => {
     }
 
     const eraseExample = () => {
-        events.keypress('e', {ctrl: true, name: 'e'})
+        events.keypress(null, {name: 'down'})
         const erase = 'Les'
         erase.split('').forEach((letter)=>{
             events.keypress(letter, {ctrl: false, name: letter})
@@ -36,19 +36,19 @@ describe('using Interface', () => {
     })
 
     it('when control and w are pressed, property active should equal "write" and rawMode should equal false so that user can enter an entire string.', () => {
-        expect(events.keypress('w', {ctrl: true, name: 'w'})).toBe('WRITING:')
+        expect(events.keypress(null, {name: 'up'})).toBe('WRITING:')
         expect(userInterface.active).toBe('write')
         expect(session.isRaw).toBe(false)
     })
 
     it('when active is set to write, it each keypress should concat to property text at least once', () => {
-        events.keypress('w', {ctrl: true, name: 'w'})
+        events.keypress(null, {name: 'up'})
         events.keypress('a', {ctrl: false, name: 'a'})
         expect(userInterface.text).toBe('a')
     })
 
     it('when active is set to write, it each keypress should concat to property text multiple times', () => {
-        events.keypress('w', {ctrl: true, name: 'w'})
+        events.keypress(null, {name: 'up'})
         events.keypress('a', {ctrl: false, name: 'a'})
         events.keypress('d', {ctrl: false, name: 'd'})
         expect(userInterface.text).toBe('ad')
@@ -82,7 +82,7 @@ describe('using Interface', () => {
         })
 
         it('when control and e are pressed, property active should equal "erase" and rawMode should equal false so that user can enter an entire string.', () => {
-            expect(events.keypress('e', {ctrl: true, name: 'e'})).toBe('ERASING:')
+            expect(events.keypress(null, {name: 'down'})).toBe('ERASING:')
             expect(userInterface.active).toBe('erase')
             expect(session.isRaw).toBe(false)
         })
@@ -96,7 +96,7 @@ describe('using Interface', () => {
     describe('using the sharpener', () => {
         it('when control and s are pressed pencil should sharpen.', () => {
             userInterface.pencil.pointDurability = 2
-            expect(events.keypress('s', {ctrl: true, name: 's'})).toBe('PENCIL SHARPENED')
+            expect(events.keypress(null, {name: 'right'})).toBe('PENCIL SHARPENED')
             expect(userInterface.pencil.pointDurability).toBe(userInterface.pencil.originalPointDurability)
         })
     })
@@ -105,7 +105,7 @@ describe('using Interface', () => {
         it('when control and d are pressed, property active should equal "edit" and rawMode should equal false so that user can enter an entire string', () => {
             writeExample()
             eraseExample()
-            expect(events.keypress('d', {ctrl: true, name: 'd'})).toBe('EDITING:')
+            expect(events.keypress(null, {name: 'left'})).toBe('EDITING:')
             events.keypress('T', {ctrl: false, name: 'T'})
             events.keypress('h', {ctrl: false, name: 'h'})
             events.keypress('e', {ctrl: false, name: 'e'})

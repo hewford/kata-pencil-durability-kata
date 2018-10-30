@@ -50,6 +50,11 @@ describe('writing with the pencil', () => {
         pencil.write('Les Miserables is the best! Yeah', paper)
         expect(pencil.pointDurability).toBe(0)
     })
+
+    it('if user tries to write with a durability of 0, should return that the pencil is dull', () => {
+        pencil.pointDurability = 0
+        expect(pencil.write('Les Miserables is the best! Yeah', paper)).toBe("Your pencil is dull")
+    })
 })
 
 describe('using the sharpener', () => {
