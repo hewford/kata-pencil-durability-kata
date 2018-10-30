@@ -1,6 +1,6 @@
 class Pencil {
     constructor(props) {
-        this.originalPointDurability = {...props}.pointDurability
+        this.originalPointDurability = props.pointDurability
         this.pointDurability = props.pointDurability
         this.length = props.length
         this.eraserDurability = props.eraserDurability
