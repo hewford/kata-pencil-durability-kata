@@ -209,4 +209,8 @@ describe('editing erased space', () => {
         pencil.edit('That French Book', paper)
         expect(paper.text).toBe('Jean Valjean is the protagonist in ThatM@serables')
     })
+
+    it('should not be able to use edit if the eraser has not been used', () => {
+        expect(pencil.edit('That French Book', paper)).toBe('cannot edit until eraser is used')
+    })
 })

@@ -86,6 +86,9 @@ class Pencil {
     }
 
     edit(text, paper) {
+        if (paper.indexOfLastCharacterErased === null) {
+            return 'cannot edit until eraser is used'
+        }
         // don't allow for tabs or newlines when editing because it would shift the following characters on the paper.
         if(text.match(/[\n\r\t]/)) {
             return 'invalid entry of either newline or return'
@@ -103,7 +106,7 @@ class Pencil {
                 text[index] !== ' ' ? paperText[target + index] = text[index] : ''
             }
         }
-        
+
         paper.text = paperText.join('')
         return 'wrote "'+text+'" in erased space'
     }
